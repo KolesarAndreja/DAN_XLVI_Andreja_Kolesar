@@ -176,13 +176,24 @@
                  VerticalAlignment="Top"
                  Width="320" />
         <TextBox x:Name="txtSalary"
-                 Text="{Binding newEmployee.salary, UpdateSourceTrigger=PropertyChanged}"
+                 Validation.ErrorTemplate="{StaticResource textBoxErrorTemplate}"
                  HorizontalAlignment="Left"
                  Height="23"
                  Margin="160,362,0,0"
                  TextWrapping="Wrap"
                  VerticalAlignment="Top"
-                 Width="320" />
+                 Width="320" >
+            <TextBox.Text>
+                <Binding Path="newEmployee.salary"
+                         UpdateSourceTrigger="PropertyChanged"
+                         ValidatesOnDataErrors="True"
+                         NotifyOnValidationError="True">
+                    <Binding.ValidationRules>
+                        <Validation:ValidPositiveNumber />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         <TextBox x:Name="txtUsername"
                  Text="{Binding newEmployee.username, UpdateSourceTrigger=PropertyChanged}"
                  HorizontalAlignment="Left"

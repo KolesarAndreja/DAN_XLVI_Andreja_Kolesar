@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 
-
 namespace DAN_XLIII.ViewModel
 {
     class ViewModelBase : INotifyPropertyChanged

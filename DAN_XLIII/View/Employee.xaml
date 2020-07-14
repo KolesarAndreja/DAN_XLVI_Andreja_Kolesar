@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Validation="clr-namespace:DAN_XLIII.Validation"
         xmlns:local="clr-namespace:DAN_XLIII.View"
         mc:Ignorable="d"
         Title="Employee"
@@ -40,13 +41,24 @@
                  VerticalAlignment="Top"
                  Width="320" />
         <TextBox x:Name="txtWorkingHours"
-                 Text="{Binding newReport.workingHours, UpdateSourceTrigger=PropertyChanged}"
+                 Validation.ErrorTemplate="{StaticResource textBoxErrorTemplate}"
                  HorizontalAlignment="Left"
                  Height="25"
                  Margin="240,160,0,0"
                  TextWrapping="Wrap"
                  VerticalAlignment="Top"
-                 Width="320" />
+                 Width="320" >
+            <TextBox.Text>
+                <Binding Path="newReport.workingHours"
+                         UpdateSourceTrigger="PropertyChanged"
+                         ValidatesOnDataErrors="True"
+                         NotifyOnValidationError="True">
+                    <Binding.ValidationRules>
+                        <Validation:ValidPositiveNumber />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         <TextBox x:Name="txtDate"
                  Text="{Binding newReport.reportDate, UpdateSourceTrigger=PropertyChanged}"
                  HorizontalAlignment="Left"
