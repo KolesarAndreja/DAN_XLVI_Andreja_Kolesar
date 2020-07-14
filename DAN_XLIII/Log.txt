@@ -1,0 +1,2 @@
+14-Jul-20 16:41 Manager Sava Rastko, access: readolny sector: RD, has been created
+14-Jul-20 16:42 Manager Gogi ASS, access: modify sector: HR, has been created

@@ -2,6 +2,7 @@
 using DAN_XLIII.Service;
 using DAN_XLIII.View;
 using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 
@@ -10,6 +11,7 @@ namespace DAN_XLIII.ViewModel
     class EmployeeViewModel:ViewModelBase
     {
         View.Employee emp;
+        //BackgroundWorker backgroundWorker = new BackgroundWorker();
 
         private vwReport _newReport;
         public vwReport newReport
@@ -56,6 +58,7 @@ namespace DAN_XLIII.ViewModel
             emp = open;
             newReport = new vwReport();
             newReport.employeeId = id;
+            //backgroundWorker.DoWork += DoWorkAdd;
         }
 
         public EmployeeViewModel(View.Employee open, vwReport report)
@@ -63,10 +66,24 @@ namespace DAN_XLIII.ViewModel
             emp = open;
             newReport = report;
             logOutVisibility = Visibility.Collapsed;
+            //backgroundWorker.DoWork += DoWorkEdit;
         }
 
         #endregion
 
+        //#region BackgroundWorkers's DoWork event handler
+        //public void DoWorkAdd(object sender, DoWorkEventArgs e)
+        //{
+        //    string content = "Employee with id " + newReport.employeeId + " has added new report.";
+        //    LogIntoFile.getInstance().PrintActionIntoFile(content);
+        //}
+
+        //public void DoWorkEdit(object sender, DoWorkEventArgs e)
+        //{
+        //    string content = "Report no. " + newReport.reportId + " has been edited.";
+        //    LogIntoFile.getInstance().PrintActionIntoFile(content);
+        //}
+        //#endregion
 
         #region Commands
 
@@ -96,6 +113,7 @@ namespace DAN_XLIII.ViewModel
                 {
                     MessageBox.Show("Report has been saved.");
                     isUpdatedReport = true;
+                    //backgroundWorker.RunWorkerAsync();
                 }
                 
             }

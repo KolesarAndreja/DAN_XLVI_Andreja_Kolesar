@@ -2,10 +2,7 @@
 using DAN_XLIII.Service;
 using DAN_XLIII.View;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 
@@ -14,6 +11,7 @@ namespace DAN_XLIII.ViewModel
     class AdminViewModel:ViewModelBase
     {
         AdminMenu adminMenu;
+        BackgroundWorker backgroundWorker = new BackgroundWorker();
         private tblEmployee _newEmployee;
         public tblEmployee newEmployee
         {
@@ -31,8 +29,16 @@ namespace DAN_XLIII.ViewModel
         public AdminViewModel(AdminMenu openAdminMenu)
         {
             adminMenu = openAdminMenu;
-            newEmployee = new tblEmployee(); 
+            newEmployee = new tblEmployee();
+            backgroundWorker.DoWork += DoWorkMethod;
         }
+        #region BackgroundWorkers's DoWork event handler
+        public void DoWorkMethod(object sender, DoWorkEventArgs e)
+        {
+            string content = "Manager " + newEmployee.firstname + " " + newEmployee.lastname + ", access: " + newEmployee.access + ", sector: " + newEmployee.sector + ", has been created" ;
+            LogIntoFile.getInstance().PrintActionIntoFile(content);
+        }
+        #endregion
 
         #region Commands
 
@@ -57,6 +63,7 @@ namespace DAN_XLIII.ViewModel
                 if (e != null)
                 {
                     MessageBox.Show("Manager has been succesfully created!");
+                    backgroundWorker.RunWorkerAsync();
                 }
                 else
                 {

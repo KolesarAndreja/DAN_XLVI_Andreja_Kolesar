@@ -3,6 +3,7 @@ using DAN_XLIII.Service;
 using DAN_XLIII.View;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,9 @@ namespace DAN_XLIII.ViewModel
 {
     class AddEmployeeViewModel : ViewModelBase
     {
+        #region Property
         AddEmployee addEmployee;
+        //BackgroundWorker backgroundWorker = new BackgroundWorker();
         private tblEmployee _newEmployee;
         public tblEmployee newEmployee
         {
@@ -27,22 +30,6 @@ namespace DAN_XLIII.ViewModel
                 OnPropertyChanged("newEmployee");
             }
         }
-
-        public AddEmployeeViewModel(AddEmployee open)
-        {
-            addEmployee = open;
-            newEmployee = new tblEmployee();
-        }
-
-        public AddEmployeeViewModel(AddEmployee open, tblEmployee userEdit)
-        {
-            addEmployee = open;
-            newEmployee = userEdit;
-            
-        }
-
-     
-
         private bool _isUpdatedEmployee;
         public bool isUpdatedEmployee
         {
@@ -55,6 +42,38 @@ namespace DAN_XLIII.ViewModel
                 _isUpdatedEmployee = value;
             }
         }
+        #endregion
+        #region constructor
+        public AddEmployeeViewModel(AddEmployee open)
+        {
+            addEmployee = open;
+            newEmployee = new tblEmployee();
+            //backgroundWorker.DoWork += DoWorkAdd;
+        }
+
+        public AddEmployeeViewModel(AddEmployee open, tblEmployee userEdit)
+        {
+            addEmployee = open;
+            newEmployee = userEdit;
+            //backgroundWorker.DoWork += DoWorkEdit;
+
+        }
+        #endregion
+
+        //#region BackgroundWorkers's DoWork event handler
+        //public void DoWorkAdd(object sender, DoWorkEventArgs e)
+        //{
+        //    string content = "Employee " + newEmployee.firstname + " " + newEmployee.lastname  + " with employeeId " + newEmployee.employeeId + " has been added.";
+        //    LogIntoFile.getInstance().PrintActionIntoFile(content);
+        //}
+
+        //public void DoWorkEdit(object sender, DoWorkEventArgs e)
+        //{
+        //    string content = "Employee " + newEmployee.firstname + " " + newEmployee.lastname + " with employeeId " + newEmployee.employeeId + " has been edited.";
+        //    LogIntoFile.getInstance().PrintActionIntoFile(content);
+        //}
+        //#endregion
+
         #region Commands
 
         private ICommand _save;
@@ -76,6 +95,7 @@ namespace DAN_XLIII.ViewModel
             {
                 Service.Service.AddNewEmployeeOrManager(newEmployee, false);
                 isUpdatedEmployee = true;
+                //backgroundWorker.RunWorkerAsync();
                 addEmployee.Close();
             }
             catch (Exception ex)
